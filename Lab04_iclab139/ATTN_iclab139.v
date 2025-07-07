@@ -1,23 +1,3 @@
-//############################################################################
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//   (C) Copyright Laboratory System Integration and Silicon Implementation
-//   All Right Reserved
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//   ICLAB 2023 Fall
-//   Lab04 Exercise		: Two Head Attention
-//   Author     		: Yu-Chi Lin (a6121461214.st12@nycu.edu.tw)
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//   File Name   : ATTN.v
-//   Module Name : ATTN
-//   Release version : V1.0 (Release Date: 2025-3)
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//############################################################################
-
-
 module ATTN(
     //Input Port
     clk,
@@ -149,20 +129,6 @@ reg [inst_sig_width+inst_exp_width:0] exp_out;
 
 reg [inst_sig_width+inst_exp_width:0] exp_in_1;
 reg [inst_sig_width+inst_exp_width:0] exp_out_1;
-
-
-// reg [inst_sig_width+inst_exp_width:0] head_out[0:4][0:3];
-// head1 除 root 2
-// reg [inst_sig_width+inst_exp_width:0] exp_score_1[0:4][0:4];
-// head2 除 root 2
-// reg [inst_sig_width+inst_exp_width:0] exp_score_2[0:4][0:4];
-
-// reg [inst_sig_width+inst_exp_width:0] final_max[0:4][0:3];
-// reg [inst_sig_width+inst_exp_width:0] exp_max[0:4][0:3];
-// reg [inst_sig_width+inst_exp_width:0] nornolize[0:4];
-// reg [inst_sig_width+inst_exp_width:0] nornolize_1[0:4];
-// reg [inst_sig_width+inst_exp_width:0] score[0:4][0:4];
-// reg [inst_sig_width+inst_exp_width:0] score_1[0:4][0:4];
 
 reg [7:0] count_2;
 reg [4:0] count_2_x;
@@ -333,14 +299,7 @@ always @(*)begin
                     n_s = S_IDLE;
                 else
                     n_s = S_OUT_MAX;
-            end                                                        
-        //   S_OUT:
-        //     begin
-        //         if (count_out == 21)
-        //             n_s = S_IDLE;
-        //         else
-        //             n_s = S_OUT;
-        //     end                                                        
+            end                                                                                                             
           default:
               n_s = S_IDLE;
       endcase
@@ -1086,27 +1045,7 @@ always @(posedge clk or negedge rst_n) begin
     end
     else count_2_sy <= 0;
 end
-/*
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 5 ; j = j + 1 ) begin
-                exp_score_1[i][j] <= 0;
-            end
-        end        
-    end
-    else if (c_s == S_SCOR) begin
-        exp_score_1[count_2_sy][count_2_sx] <= exp_out;
-    end
-    else begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 5 ; j = j + 1 ) begin
-                exp_score_1[i][j] <= exp_score_1[i][j];
-            end
-        end
-    end
-end*/
-
+    
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         div_in_1 <= 0;
@@ -1139,27 +1078,7 @@ always @(posedge clk or negedge rst_n) begin
         exp_in_1 <= div_out_1;
     end
 end
-/*
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 5 ; j = j + 1 ) begin
-                exp_score_2[i][j] <= 0;
-            end
-        end        
-    end
-    else if (c_s == S_SCOR) begin
-        exp_score_2[count_2_sy][count_2_sx] <= exp_out_1;
-    end
-    else begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 5 ; j = j + 1 ) begin
-                exp_score_2[i][j] <= exp_score_2[i][j];
-            end
-        end          
-    end
-end
-*/
+
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         count_head <= 0;
@@ -1215,29 +1134,6 @@ always @(posedge clk or negedge rst_n) begin
     end
     else count_head_y <= 0;
 end
-/*
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 4 ; j = j + 1 ) begin
-                head_out[i][j] <= 0;
-            end
-        end        
-    end 
-    else if (c_s == S_EXP) begin
-        head_out[count_head_out_x][count_head_out_y] <= test6_1;
-    end  
-    else if (c_s == S_EXP_1) begin
-        head_out[count_head_out_x][count_head_out_y] <= test6_1;
-    end  
-    else begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 4 ; j = j + 1 ) begin
-                head_out[i][j] <= head_out[i][j];
-            end
-        end            
-    end 
-end */
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -1283,27 +1179,7 @@ always @(posedge clk or negedge rst_n) begin
     end
     else count_final_y <= 0;
 end
-/*
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 4 ; j = j + 1 ) begin
-                final_max[i][j] <= 0;
-            end
-        end
-    end
-    else if (c_s == S_FINAL) begin
-        final_max[count_final_y][count_final_x] <= test6;
-    end
-    else begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 4 ; j = j + 1 ) begin
-                final_max[i][j] <= final_max[i][j];
-            end
-        end
-    end
-end
-*/
+
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         count_exp <= 0;
@@ -1339,99 +1215,6 @@ always @(posedge clk or negedge rst_n) begin
     else count_exp_y <= 0;
 end
 
-// always @(posedge clk or negedge rst_n) begin
-//     if (!rst_n) begin
-//         for (i = 0; i < 5 ; i = i + 1 ) begin
-//             for (j = 0; j < 4 ; j = j + 1 ) begin
-//                 exp_max[i][j] <= 0;
-//             end
-//         end
-//     end
-//     else if (c_s == S_FINAL) begin
-//         exp_max[count_exp_y][count_exp_x] <= exp_out;
-//     end
-//     else begin
-//         for (i = 0; i < 5 ; i = i + 1 ) begin
-//             for (j = 0; j < 4 ; j = j + 1 ) begin
-//                 exp_max[i][j] <= exp_max[i][j];
-//             end
-//         end
-//     end
-// end
-/*
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            nornolize[i] <= 0;
-        end
-    end
-    else if (c_s == S_HEAD_1) begin
-        nornolize[count_exp_out] <= test6_1;
-    end
-    else begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            nornolize[i] <= nornolize[i];
-        end
-    end
-end*/
-/*
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            nornolize_1[i] <= 0;
-        end
-    end
-    else if (c_s == S_HEAD_2) begin
-        nornolize_1[count_exp_out] <= test6_1;
-    end
-    else begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            nornolize_1[i] <= nornolize_1[i];
-        end
-    end
-end*/
-/*
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 5 ; j = j + 1 ) begin
-                score[i][j] <= 0;
-            end
-        end
-    end
-    else if (c_s == S_FINAL) begin
-        score[count_final_y][count_final_x] <= div_out;
-    end
-    else begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 5 ; j = j + 1 ) begin
-                score[i][j] <= score[i][j];
-            end
-        end
-    end
-end*/
-/*
-always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 5 ; j = j + 1 ) begin
-                score_1[i][j] <= 0;
-            end
-        end
-    end
-    else if (c_s == S_FINAL) begin
-        score_1[count_final_y][count_final_x] <= div_out_1;
-    end
-    else begin
-        for (i = 0; i < 5 ; i = i + 1 ) begin
-            for (j = 0; j < 5 ; j = j + 1 ) begin
-                score_1[i][j] <= score_1[i][j];
-            end
-        end
-    end
-end */
-
-
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         exp_in <= 0;
@@ -1455,19 +1238,6 @@ always @(posedge clk or negedge rst_n) begin
     end
     else count_exp_out <= 0;
 end
-
-// always @(posedge clk or negedge rst_n) begin
-//     if (!rst_n) begin
-//         count_out <= 0;
-//     end
-//     else if (c_s == S_OUT) begin
-//         count_out <= count_out + 1;
-//     end
-//     else if (c_s == S_LOAD) begin
-//         count_out <= 0;
-//     end
-//     else count_out <= count_out;
-// end
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
