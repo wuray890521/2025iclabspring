@@ -1,15 +1,3 @@
-/**************************************************************************/
-// Copyright (c) 2025, OASIS Lab
-// MODULE: STA
-// FILE NAME: STA.v
-// VERSRION: 1.0
-// DATE: 2025/02/26
-// AUTHOR: Yu-Hao Cheng, NYCU IEE
-// DESCRIPTION: ICLAB 2025 Spring / LAB3 / STA
-// MODIFICATION HISTORY:
-// Date                 Description
-// 
-/**************************************************************************/
 module STA(
 	//INPUT
 	rst_n,
